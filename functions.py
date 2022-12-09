@@ -50,6 +50,16 @@ def player_check(p1, p2):
         return embed
 
 
+#function for checking trusted commands
+
+def trusted(ctx):
+    for u in data["users"]:
+        if u["id"] == ctx.author.id and u["trusted"] == True:
+            return True
+    else:
+        return False
+
+
 #function for /create command
 #saves new player to data.json
 
@@ -66,11 +76,17 @@ def create(ctx):
 
     data["users"].append({
         "id": f"{ctx.author.id}",
+        "steamId": None,
         "name": f'{ctx.author}',
         "skill": 5,
         "dislikes": [],
         "banned": [],
-        "trusted": False
+        "trusted": False,
+        "gameStats": {
+            "gamesWon": 0,
+            "gamesLost": 0,
+            "gamesTotal": 0
+        }
     })
 
     save(data)
@@ -89,6 +105,12 @@ def create(ctx):
 
 def TMinfo(ctx, p):
     global data
+
+    if trusted(ctx) == False:
+            embed = discord.Embed(title="You aren't authorized to use this command",
+                                  description="",
+                                  color=0xFF0000)
+            return ctx.send(embed=embed)
 
     person = getUser(p)
     nl = '\n'
@@ -133,6 +155,12 @@ def TMinfo(ctx, p):
 def dislikes(ctx, p1, p2):
     global data
 
+    if trusted(ctx) == False:
+            embed = discord.Embed(title="You aren't authorized to use this command",
+                                  description="",
+                                  color=0xFF0000)
+            return ctx.send(embed=embed)    
+
     p1 = getUser(p1)
     p2 = getUser(p2)
 
@@ -156,6 +184,12 @@ def dislikes(ctx, p1, p2):
 
 def like(ctx, p1, p2):
     global data
+
+    if trusted(ctx) == False:
+            embed = discord.Embed(title="You aren't authorized to use this command",
+                                  description="",
+                                  color=0xFF0000)
+            return ctx.send(embed=embed)
 
     p1 = getUser(p1)
     p2 = getUser(p2)
@@ -184,6 +218,12 @@ def like(ctx, p1, p2):
 def skill(ctx, p, l):
     global data
 
+    if trusted(ctx) == False:
+            embed = discord.Embed(title="You aren't authorized to use this command",
+                                  description="",
+                                  color=0xFF0000)
+            return ctx.send(embed=embed)
+
     p = getUser(p)
 
     l = int(l)
@@ -206,6 +246,12 @@ def skill(ctx, p, l):
 
 def ban(ctx, p1, p2):
     global data
+
+    if trusted(ctx) == False:
+            embed = discord.Embed(title="You aren't authorized to use this command",
+                                  description="",
+                                  color=0xFF0000)
+            return ctx.send(embed=embed)
 
     p1 = getUser(p1)
     p2 = getUser(p2)
@@ -233,6 +279,12 @@ def ban(ctx, p1, p2):
 def unban(ctx, p1, p2):
     global data
 
+    if trusted(ctx) == False:
+            embed = discord.Embed(title="You aren't authorized to use this command",
+                                  description="",
+                                  color=0xFF0000)
+            return ctx.send(embed=embed)
+
     p1 = getUser(p1)
     p2 = getUser(p2)
 
@@ -257,6 +309,12 @@ def unban(ctx, p1, p2):
 
 def delete(ctx, p1):
 
+    if trusted(ctx) == False:
+            embed = discord.Embed(title="You aren't authorized to use this command",
+                                  description="",
+                                  color=0xFF0000)
+            return ctx.send(embed=embed)
+
     p1 = getUser(p1)
 
     if p1 == False:
@@ -276,6 +334,12 @@ def delete(ctx, p1):
 def TMcreate(ctx, id, name, skill):
     global data
 
+    if trusted(ctx) == False:
+            embed = discord.Embed(title="You aren't authorized to use this command",
+                                  description="",
+                                  color=0xFF0000)
+            return ctx.send(embed=embed)
+
     try: 
         skill = int(skill)
     except:
@@ -292,11 +356,17 @@ def TMcreate(ctx, id, name, skill):
     else:
         data["users"].append({
             "id": id,
+            "steamId": None,
             "name": name,
             "skill": skill,
             "dislikes": [],
             "banned": [],
-            "trusted": False
+            "trusted": False,
+            "gameStats": {
+                "gamesWon": 0,
+                "gamesLost": 0,
+                "gamesTotal": 0
+            }
         })
 
         save(data)
@@ -310,6 +380,12 @@ def TMcreate(ctx, id, name, skill):
 
 def trust(ctx, p):
     global data
+
+    if ctx.author.id != "342979399252967424":
+            embed = discord.Embed(title="You aren't authorized to use this command",
+                                  description="",
+                                  color=0xFF0000)
+            return ctx.send(embed=embed)
 
     p = getUser(p)
 
@@ -332,6 +408,12 @@ def trust(ctx, p):
  
 def untrust(ctx, p):
     global data
+
+    if ctx.author.id != "342979399252967424":
+            embed = discord.Embed(title="You aren't authorized to use this command",
+                                  description="",
+                                  color=0xFF0000)
+            return ctx.send(embed=embed)
 
     p = getUser(p)
 

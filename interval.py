@@ -36,7 +36,6 @@ def steamListUpdate():
             SIlist.append(u["steamId"])
 
 
-
 #fucntion for getting the stats from the collected steam data (returns dict)
 
 def getStats(data):
@@ -98,6 +97,9 @@ def do_something(sc):
     savePlayerData(playerList)
 
     sc.enter(10, 1, do_something, (sc,))
+
+
+#start the loop
 
 s.enter(10, 1, do_something, (s,))
 s.run()

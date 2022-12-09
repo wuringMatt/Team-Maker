@@ -3,6 +3,7 @@
 import discord
 from discord.ext import commands
 import functions
+import game
 import os
 
 
@@ -25,7 +26,11 @@ async def create(ctx: discord.ApplicationContext):
 
 @bot.slash_command(name="play", description="start a game of l4d2 versus")
 async def play(ctx: discord.ApplicationContext, when: str, players: int):
-    await functions.play(ctx, when, players)
+    await game.play(ctx, when, players)
+
+@bot.slash_command(name="edit", description="start a game of l4d2 versus")
+async def edit(ctx: discord.ApplicationContext):
+    await game.edit(ctx)
 
 @bot.slash_command(
     name="link",
